@@ -11,17 +11,16 @@ if (fs.existsSync('/boot/appData/config.js')) {
 
 var obtains = [
   './src/wallControl.js',
-  'µ/commandClient.js',
+  'µ/socket.js',
   '../piFig/src/utils.js',
   `${appData}/config.js`,
+  'child_process',
 ];
 
-obtain(obtains, ({ valves }, { MuseControl }, utils, { config })=> {
+obtain(obtains, ({ valves }, socket, utils, { config }, { execSync })=> {
   exports.app = {};
 
-  var control = new MuseControl('172.17.69.76');
-
-  //console.log(utils.getIpAddress());
+  var control = socket.get('waterwall.net');
 
   var _ = 1;
 
@@ -125,17 +124,21 @@ obtain(obtains, ({ valves }, { MuseControl }, utils, { config })=> {
 
     control.connect();
 
+    control.onconnect = ()=> {
+      console.log('connected to server');
+
+      var serNum = execSync(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`);
+      console.log(`Serial number: ${serNum}`);
+
+      control.synchronize();
+      control.send({ _id: serNum, ip: utils.getIpAddress() });
+    };
+
     valves.pixel.height = 60;
 
     /*let defaultDraw = setInterval(()=> {
       valves.drawRaster(test, Date.now() + 50);
     }, (test.length + 10) * valves.pixel.height);*/
-
-    control.onConnect = ()=> {
-      console.log('connected to server');
-      //clearInterval(defaultDraw);
-      control.send({ _id: config._id, ip: utils.getIpAddress() });
-    };
 
     console.log('started');
 
