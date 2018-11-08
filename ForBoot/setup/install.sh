@@ -1,37 +1,29 @@
 #!/bin/bash
-
-REPO_NAME=waterWallClient
-ACCOUNT=scimusmn
-
-echo -e "\nInstalling node and system dependencies:"
+echo -e "\nInstalling node:"
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
-sudo apt-get install python2.7
+sudo apt-get --assume-yes install xserver-xorg-video-fbturbo
 
-sudo apt-get install --no-install-recommends build-essential hostapd dnsmasq network-manager xserver-xorg xinit xserver-xorg-video-fbdev libxss1 libgconf-2-4 libnss3 git nodejs libgtk2.0-0 libxtst6
+sudo apt-get --assume-yes install libgtk-3-0
 
-sudo apt-get install xserver-xorg-video-fbturbo
+sudo apt-get --assume-yes install git libudev-dev
 
-sudo apt-get install libasound2
+sudo apt-get --assume-yes install build-essential hostapd dnsmasq network-manager xserver-xorg xinit xserver-xorg-video-fbdev libxss1 libgconf-2-4 libnss3 git nodejs libgtk2.0-0 libxtst6
 
-echo -e "\nClone the application"
+sudo apt-get --assume-yes install libasound2
 
-git clone https://github.com/${ACCOUNT}/${REPO_NAME}.git
+echo  -e "\nClone the wrapper"
 
-cd ${REPO_NAME}
+git clone --recurse-submodules https://github.com/heidgera/Parcel.git
 
-echo -e "\nInit the submodules:"
+cd Parcel
 
-git submodule init
-
-git submodule update
-
-echo -e "\nInstalling dependencies for application:"
+echo  -e "\nInstalling dependencies for Parcel:"
 
 npm i
 
-echo -e "\nConfiguring..."
+echo  -e "\nConfiguring"
 
 cd piFig
 

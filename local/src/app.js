@@ -12,12 +12,11 @@ if (fs.existsSync('/boot/appData/config.js')) {
 var obtains = [
   './src/wallControl.js',
   'µ/socket.js',
-  '../piFig/src/utils.js',
   `${appData}/config.js`,
   'child_process',
 ];
 
-obtain(obtains, ({ valves }, socket, utils, { config }, { execSync })=> {
+obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
   exports.app = {};
 
   var control = socket.get('waterwall.net');
@@ -105,6 +104,10 @@ obtain(obtains, ({ valves }, socket, utils, { config }, { execSync })=> {
   };
 
   exports.app.start = ()=> {
+
+    var serNum = execSync(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`);
+    console.log(`Serial number: ${serNum}`);
+
     control.addListener('drawRow', (pack)=> {
       valves.rasterRow(pack.data, pack.stamp - control.timeOffset);
     });
@@ -127,11 +130,8 @@ obtain(obtains, ({ valves }, socket, utils, { config }, { execSync })=> {
     control.onconnect = ()=> {
       console.log('connected to server');
 
-      var serNum = execSync(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`);
-      console.log(`Serial number: ${serNum}`);
-
       control.synchronize();
-      control.send({ _id: serNum, ip: utils.getIpAddress() });
+      control.send({ _id: serNum });
     };
 
     valves.pixel.height = 60;

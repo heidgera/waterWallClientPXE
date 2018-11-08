@@ -5,6 +5,7 @@ exports.config = {
       password: 'template!',
       domainName: 'template.net',
     },*/
+    appRepo: 'https://github.com/heidgera/waterWallClientPXE',
     autostart: true,
     gitWatch: true,
     softShutdown: {
