@@ -131,7 +131,7 @@ obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
       console.log('connected to server');
 
       control.synchronize();
-      control.send({ _id: serNum });
+      control.send({ uuid: serNum });
     };
 
     valves.pixel.height = 60;
