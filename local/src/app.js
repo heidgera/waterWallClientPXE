@@ -105,8 +105,8 @@ obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
 
   exports.app.start = ()=> {
 
-    var serNum = execSync(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`);
-    console.log(serNum.toString());
+    var serNum = execSync(`cat /proc/cpuinfo | grep Serial | cut -d ' ' -f 2`).toString();
+    console.log(serNum);
 
     control.addListener('drawRow', (pack)=> {
       valves.rasterRow(pack.data, pack.stamp - control.timeOffset);
