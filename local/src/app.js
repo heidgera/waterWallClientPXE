@@ -19,7 +19,7 @@ var obtains = [
 obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
   exports.app = {};
 
-  var control = socket.get('waterwall.net');
+  var control = socket.get('192.168.0.1');
 
   var _ = 1;
 
