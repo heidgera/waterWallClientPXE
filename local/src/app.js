@@ -113,6 +113,7 @@ obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
     });
 
     control.addListener('drawRaster', (pack)=> {
+      console.console.log(pack.data);
       valves.drawRaster(pack.data, pack.stamp - control.timeOffset);
     });
 
