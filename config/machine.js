@@ -1,5 +1,5 @@
 exports.config = {
-  piFig: {
+  machine: {
     /*wifiHotspot: {
       ssid: 'Template',
       password: 'template!',
