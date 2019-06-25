@@ -135,6 +135,10 @@ obtain(obtains, ({ valves }, socket, config, { execSync })=> {
       control.send({ uuid: serNum });
     };
 
+    control.onclose = ()=>{
+      control.connect();
+    }
+
     valves.pixel.height = 60;
 
     /*let defaultDraw = setInterval(()=> {
