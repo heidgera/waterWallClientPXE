@@ -1,22 +1,22 @@
 'use strict';
 
-var appData = '../ForBoot/appData';
+var appData = '../config/';
 
 var fs = require('fs');
 
-if (fs.existsSync('/boot/appData/config.js')) {
-  console.log('on pi');
-  appData = '/boot/appData';
-}
+// if (fs.existsSync('/boot/appData/config.js')) {
+//   console.log('on pi');
+//   appData = '/boot/appData';
+// }
 
 var obtains = [
   './src/wallControl.js',
   'µ/socket.js',
-  `${appData}/config.js`,
+  `../config/app.js`,
   'child_process',
 ];
 
-obtain(obtains, ({ valves }, socket, { config }, { execSync })=> {
+obtain(obtains, ({ valves }, socket, config, { execSync })=> {
   exports.app = {};
 
   var control = socket.get('192.168.0.1');
